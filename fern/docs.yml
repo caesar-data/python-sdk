@@ -1,9 +1,9 @@
 instances:
-  - url: https://caesar.docs.buildwithfern.com​
+  - url: caesar.docs.buildwithfern.com​
 title: Caesar | Documentation
 navigation:
   - api: API Reference
     paginated: true
 colors:
-  accentPrimary: '#ffffff'
-  background: '#000000'
+  accentPrimary: '#000000'
+  background: '#ffffff'
