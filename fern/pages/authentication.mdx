@@ -1,0 +1,29 @@
+# Authentication
+
+Caesar uses API keys for authentication. An API key is required to authenticate requests and enable integration with Caesar’s platform.
+
+<Note>
+  Get your API key at <a href="https://ask.caesar.xyz/app/api-keys">ask.caesar.xyz/app/api-keys</a>.
+</Note>
+
+<Warning>
+  The secret is shown <b>once</b> at creation. Copy it immediately and store it securely (e.g. an environment variable or secrets manager). Never commit it to version control or embed it in client-side code.
+</Warning>
+
+## Generate a Caesar API key
+
+1. Visit <a href="https://ask.caesar.xyz/app/api-keys">ask.caesar.xyz/app/api-keys</a>.
+2. Create a new API key.
+3. Click <b>Copy</b> to copy the secret and save it securely. You will not be able to view it again.
+
+## Authenticate your requests
+
+Send your API key as a Bearer token in the HTTP <code>Authorization</code> header on every request.
+
+### Example Request
+
+```json JSON
+curl 'https://api.caesar.xyz/research?page=1&limit=25' \
+  -H "Authorization: Bearer $CAESAR_API_KEY" \
+  -H "Accept: application/json"
+```

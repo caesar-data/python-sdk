@@ -1,10 +1,34 @@
 instances:
   - url: caesar.docs.buildwithfern.com
-    custom-domains: docs.caesar.xyz
-title: Caesar | Documentation
+    custom-domain: docs.caesar.xyz
+
+title: Caesar | API Documentation
+favicon: assets/favicon.ico
+
+logo:
+  href: https://caesar.xyz
+  dark: assets/dark-logo.svg
+  light: assets/light-logo.svg
+
+landing-page:
+  page: Introduction
+  path: pages/introduction.mdx
+
 navigation:
+  - section: Home
+    contents:
+      - page: Introduction
+        path: pages/introduction.mdx
+      - page: Authentication
+        path: pages/authentication.mdx
+      - page: Rate Limits
+        path: pages/rate-limits.mdx
   - api: API Reference
     paginated: true
+
 colors:
   accentPrimary: '#000000'
   background: '#ffffff'
+
+layout:
+  hide-feedback: true

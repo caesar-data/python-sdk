@@ -2,9 +2,9 @@ openapi: 3.1.0
 info:
   version: 01-09-2025
   title: API Reference
-  description: ""
+  description: "TThe Caesar API creates and manages asynchronous research requests that search the internet and proprietary data sources, gathering evidence and synthesising a fully cited answer to your query. Control the output with a system prompt to shape the final synthesis for your application."
 servers:
-- url: https://api.caesar.org
+- url: https://api.caesar.xyz
   description: Production server
 security:
 - bearerAuth: []
