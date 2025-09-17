@@ -1,5 +1,7 @@
 # Caesar API Documentation
 
+![Alt text](/assets/header.png "Caesar")
+
 Caesar’s Research API is a citation-first, AI-enabled research service. It searches the internet and proprietary data sources, gathers evidence, and synthesises answers with complete citations. It lets developers build sophisticated AI applications without maintaining their own search, indexing, or research infrastructure.
 
 ## Fundamentals
@@ -11,32 +13,3 @@ Caesar’s Research API is a citation-first, AI-enabled research service. It sea
 ## Testing
 
 You can use the API playground to test the API endpoints directly from the API reference.
-
-## Research Workflow
-
-```mermaid
-flowchart TD
-  A([Start]) --> B{Include files?}
-
-  %% With files
-  B -- Yes --> C[POST /research/files Upload one or more files]
-  C --> D[Receive file IDs]
-  D --> E["POST /research Body: query + file IDs (optional) system_prompt, compute_units"]
-
-  %% Without files
-  B -- No --> E["POST /research Body: query + file IDs (optional) system_prompt, compute_units"]
-
-  %% Job lifecycle
-  E --> F{200 OK}
-  F --> G[Job created id + status = queued]
-  G --> H["GET /research/{id} Poll for status"]
-  H --> I{Status?}
-  I -->|queued / searching / summarizing / analyzing| H
-  I -->|completed| J["Read content + results (citations)"]
-  I -->|failed| K[Handle error / retry]
-
-  J --> L([Done])
-  K --> L([Done])
-
-
-```

@@ -24,7 +24,19 @@ navigation:
       - page: Rate Limits
         path: pages/rate-limits.mdx
   - api: API Reference
-    paginated: true
+    flattened: true
+    layout:
+      - research:
+        - endpoint: POST /research
+          title: Create research
+        - endpoint: GET /research/{id}
+          title: Retrieve a research object
+        - endpoint: GET /research
+          title: List research
+        - endpoint: POST /research/files
+          title: Create file
+        - endpoint: GET /research/files
+          title: List files
 
 colors:
   accentPrimary: '#000000'
