@@ -1,5 +1,6 @@
 instances:
   - url: caesar.docs.buildwithfern.com
+    custom-domains: docs.caesar.xyz
 title: Caesar | Documentation
 navigation:
   - api: API Reference
