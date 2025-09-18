@@ -12,11 +12,11 @@ Compute Units control the number of reasoning steps Caesar performs during resea
 4. **Validates conclusions** against additional evidence
 5. **Refines the response** based on accumulated knowledge
 
-<ParamField query="compute_units" type="integer" default="3">
+<ParamField query="compute_units" type="integer" default="1">
   The computational budget for your research query.
 
   - **Range**: 110
-  - **Default**: 3
+  - **Default**: 1
   - **Time correlation**: ~1 minute per CU
 </ParamField>
 
@@ -138,7 +138,7 @@ Understanding how Caesar utilizes compute units helps optimize your usage:
 
 <CardGroup cols={2}>
   <Card title="Start conservative" icon="gauge">
-    Begin with CU 3 (default) and adjust based on response quality. Most queries achieve optimal results at this level.
+    Begin with CU 1 (default) and adjust based on response quality. Increase for queries requiring deeper analysis.
   </Card>
 
   <Card title="Match complexity" icon="brain">
@@ -194,4 +194,4 @@ Caesar internally:
 2. **The jump from CU 1 to CU 2 is most significant**, enabling validation and gap-filling capabilities
 3. **Higher CU values (>5) show diminishing returns** except for genuinely complex, quantitative research
 4. **Match CU to query complexity**, not query importanceeven critical queries may only need CU 2-3 if they're straightforward
-5. **Consider time-to-insight tradeoffs**sometimes multiple focused CU 3 queries beat a single CU 10 query
+5. **Consider time-to-insight tradeoffs**sometimes multiple focused lower-CU queries beat a single CU 10 query

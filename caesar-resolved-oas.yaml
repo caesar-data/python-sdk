@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   version: 01-09-2025
   title: API Reference
-  description: "TThe Caesar API creates and manages asynchronous research requests that search the internet and proprietary data sources, gathering evidence and synthesising a fully cited answer to your query. Control the output with a system prompt to shape the final synthesis for your application."
+  description: "The Caesar API creates and manages asynchronous research requests that search the internet and proprietary data sources, gathering evidence and synthesising a fully cited answer to your query. Control the output with a system prompt to shape the final synthesis for your application."
 servers:
 - url: https://api.caesar.xyz
   description: Production server
@@ -46,7 +46,8 @@ paths:
                   type: integer
                   minimum: 1
                   maximum: 10
-                  description: Optional compute budget for the job.
+                  default: 1
+                  description: Optional compute budget for the job. Defaults to 1.
                 system_prompt:
                   type: string
                   description: Optional system prompt to steer the assistant.
@@ -342,7 +343,6 @@ paths:
                     - limit: 10
                       page: 1
                       has_next: true
-                      total: 42
                 examples:
                 - data:
                   - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
@@ -356,7 +356,6 @@ paths:
                     limit: 10
                     page: 1
                     has_next: true
-                    total: 42
               examples:
                 firstPage:
                   value:
@@ -383,7 +382,6 @@ paths:
                       limit: 10
                       page: 1
                       has_next: true
-                      total: 42
         "400":
           description: Bad request — invalid input parameters.
           content:
@@ -689,6 +687,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              additionalProperties: false
               required:
               - file
               properties:
@@ -909,7 +908,6 @@ paths:
                     - limit: 10
                       page: 1
                       has_next: true
-                      total: 42
                 examples:
                 - data:
                   - id: 9c6f8b1a-2a4f-4a35-86b9-0d0b5e25d5e5
@@ -919,7 +917,6 @@ paths:
                     limit: 10
                     page: 1
                     has_next: false
-                    total: 1
               examples:
                 firstPage:
                   value:
@@ -934,7 +931,6 @@ paths:
                       limit: 10
                       page: 1
                       has_next: true
-                      total: 42
         "400":
           description: Bad request — invalid input parameters.
           content:
@@ -1069,7 +1065,8 @@ components:
           type: integer
           minimum: 1
           maximum: 10
-          description: Optional compute budget for the job.
+          default: 1
+          description: Optional compute budget for the job. Defaults to 1.
         system_prompt:
           type: string
           description: Optional system prompt to steer the assistant.
@@ -1350,7 +1347,6 @@ components:
           - limit: 10
             page: 1
             has_next: true
-            total: 42
       examples:
       - data:
         - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
@@ -1364,7 +1360,6 @@ components:
           limit: 10
           page: 1
           has_next: true
-          total: 42
     CreateResearchFileResponse:
       type: object
       additionalProperties: false
@@ -1414,7 +1409,6 @@ components:
       - limit: 10
         page: 1
         has_next: true
-        total: 42
     PagedFileResponse:
       type: object
       additionalProperties: false
@@ -1474,7 +1468,6 @@ components:
           - limit: 10
             page: 1
             has_next: true
-            total: 42
       examples:
       - data:
         - id: 9c6f8b1a-2a4f-4a35-86b9-0d0b5e25d5e5
@@ -1484,7 +1477,6 @@ components:
           limit: 10
           page: 1
           has_next: false
-          total: 1
     ErrorResponse:
       type: object
       additionalProperties: false

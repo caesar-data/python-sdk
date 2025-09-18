@@ -56,8 +56,7 @@ All paginated responses return your data wrapped in a consistent structure:
   "pagination": {     // Metadata about the current page
     "page": 1,
     "limit": 10,
-    "has_next": true,
-    "total": 85
+    "has_next": true
   }
 }
 ```
@@ -75,7 +74,6 @@ Provides context about where you are in the result set:
 | `page` | integer | Current page number (1-based) |
 | `limit` | integer | Number of items per page |
 | `has_next` | boolean | Whether more pages are available |
-| `total` | integer (optional) | Total items across all pages |
 
 <EndpointResponseSnippet endpoint="GET /research" example="firstPage" />
 
