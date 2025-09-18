@@ -1,0 +1,18 @@
+# Errors
+
+Caesar uses standard HTTP response codes to indicate success or failure of an API request.
+
+Successful responses are indicated by a `2xx` status code. With client (you) errors, the API will return a `4xx` status code. With server errors (us), the API will return a `5xx` status code.
+
+By default, **all successful requests return a `200 OK` response**, regardless of the HTTP method used (`GET`, `POST`, etc.). The body will contain the relevant resource or acknowledgement payload.
+
+### HTTP Status Codes
+
+| Status | When it happens | Example `error` |
+|---|---|---|
+| **200 OK** | Default for all successful requests. | *Varies by endpoint* |
+| **400 Bad Request** | Your request is malformed or fails validation. | `Body contains incorrect JSON type for field "compute_units"` |
+| **401 Unauthorized** | Missing or invalid API key in the `Authorization` header. | `Missing API key` |
+| **404 Not Found** | The resource doesn’t exist (e.g. unknown research ID). | `Resource not found` |
+| **429 Too Many Requests** | You exceeded rate limits (applies to `POST /research` only). | `Rate limit exceeded. Try again later.` |
+| **500 Internal Server Error** | An unexpected error occurred on our side. | `An unexpected error occurred` |

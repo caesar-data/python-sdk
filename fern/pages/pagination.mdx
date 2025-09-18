@@ -1,0 +1,106 @@
+# Pagination
+
+The Caesar API uses **page-based pagination** to handle large result sets efficiently. All list endpoints follow a consistent pagination pattern that makes it easy to retrieve results page by page.
+
+## How it works
+
+When requesting data from list endpoints, you can control the amount of data returned using two simple parameters:
+- **`page`**: Which page of results to retrieve (starts at 1)
+- **`limit`**: How many items per page (1-200, default is 10)
+
+## Supported endpoints
+
+Pagination is available on the following endpoints:
+
+<CodeGroup>
+
+```bash GET /research
+GET /research?page=1&limit=25
+```
+
+```bash GET /research/files
+GET /research/files?page=2&limit=50
+```
+
+</CodeGroup>
+
+## Request parameters
+
+<ParamField query="page" type="integer" default="1">
+  The page number to retrieve (1-based indexing).
+
+  - **Default**: 1
+  - **Minimum**: 1
+  - **Example**: `page=3` retrieves the third page of results
+</ParamField>
+
+<ParamField query="limit" type="integer" default="10">
+  The number of items to return per page.
+
+  - **Default**: 10
+  - **Range**: 1–200
+  - **Example**: `limit=25` returns 25 items per page
+</ParamField>
+
+<Note>
+  **Tip:** Start with the default values and adjust based on your needs. Larger page sizes mean fewer API calls but larger response payloads.
+</Note>
+
+## Response format
+
+All paginated responses return your data wrapped in a consistent structure:
+
+```json
+{
+  "data": [...],      // Your requested items
+  "pagination": {     // Metadata about the current page
+    "page": 1,
+    "limit": 10,
+    "has_next": true,
+    "total": 85
+  }
+}
+```
+
+### Understanding the response
+
+#### The `data` field
+Contains an array of the items for the current page. If you request a page beyond the available data, this returns an empty array.
+
+#### The `pagination` field
+Provides context about where you are in the result set:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `page` | integer | Current page number (1-based) |
+| `limit` | integer | Number of items per page |
+| `has_next` | boolean | Whether more pages are available |
+| `total` | integer (optional) | Total items across all pages |
+
+<EndpointResponseSnippet endpoint="GET /research" example="firstPage" />
+
+
+## Error handling
+
+### Common errors
+
+| Error | Status | Cause | Solution |
+|-------|--------|-------|----------|
+| Invalid page | 400 | `page < 1` | Use page ≥ 1 |
+| Invalid limit | 400 | `limit < 1` or `limit > 200` | Use limit between 1-200 |
+| Invalid type | 400 | Non-integer values | Ensure page and limit are integers |
+
+### Example error response
+
+```json
+{
+  "error": {
+    "code": "INVALID_PAGINATION",
+    "message": "Invalid pagination parameters: page must be >= 1",
+    "details": {
+      "page": 0,
+      "limit": 10
+    }
+  }
+}
+```

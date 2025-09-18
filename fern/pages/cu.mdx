@@ -1,0 +1,197 @@
+# Compute Units
+
+Compute Units (CU) represent the computational budget allocated to your research queries, directly influencing the depth and breadth of Caesar's reasoning process. Each unit roughly corresponds to one minute of processing time and enables additional agentic loops for information gathering, validation, and synthesis.
+
+## Understanding compute units
+
+Compute Units control the number of reasoning steps Caesar performs during research. Think of them as iterative cycles where Caesar:
+
+1. **Gathers information** from diverse sources
+2. **Analyzes and synthesizes** findings
+3. **Identifies gaps** in the current understanding
+4. **Validates conclusions** against additional evidence
+5. **Refines the response** based on accumulated knowledge
+
+<ParamField query="compute_units" type="integer" default="3">
+  The computational budget for your research query.
+
+  - **Range**: 110
+  - **Default**: 3
+  - **Time correlation**: ~1 minute per CU
+</ParamField>
+
+## Impact on research quality
+
+The relationship between compute units and research quality is nuanced. More compute doesn't always mean better resultsit depends on the nature of your query.
+
+<img src="/assets/HLE.png" alt="Caesar performance on Humanity's Last Exam benchmark across compute units" />
+
+<Note>
+  The chart shows Caesar's performance on Humanity's Last Exam (HLE), a challenging benchmark of PhD-level questions. Notice the significant jump from 1 to 3 CU (from 19.95% to 53.85%), demonstrating the value of enabling multi-step reasoning.
+</Note>
+
+### Key observations
+
+1. **CU 1 (19.95%)**: Single-pass reasoning with limited context gathering
+2. **CU 2-3 (39.83% - 53.85%)**: Substantial improvement as Caesar can validate and refine initial findings
+3. **CU 10 (55.87%)**: Marginal gains beyond CU 3, showing diminishing returns for most queries
+
+The dramatic improvement from CU 1 to CU 2-3 occurs because Caesar gains the ability to:
+- Cross-reference initial findings
+- Fill knowledge gaps identified in the first pass
+- Validate conclusions against contradictory evidence
+- Synthesize a more coherent narrative
+
+## Choosing the right compute budget
+
+### Query complexity matrix
+
+| Query Type | Recommended CU | Rationale |
+|------------|---------------|-----------|
+| **Simple factual queries** | 1-2 | Single-source verification sufficient |
+| **Comparative analysis** | 2-3 | Multiple perspectives needed |
+| **Literature reviews** | 3-5 | Extensive source coverage required |
+| **Complex quantitative research** | 5-7 | Deep multi-source validation |
+| **Frontier research questions** | 7-10 | Maximum exploration of edge cases |
+
+### Examples by domain
+
+<Tabs>
+  <Tab title="Financial Analysis">
+    ```json
+    // Earnings summary (CU: 2)
+    {
+      "query": "Apple Q3 2024 earnings highlights",
+      "compute_units": 2
+    }
+
+    // Market comparison (CU: 5)
+    {
+      "query": "Comparative analysis of FAANG stocks YTD performance with sector rotation implications",
+      "compute_units": 5
+    }
+    ```
+  </Tab>
+
+  <Tab title="Scientific Research">
+    ```json
+    // Recent developments (CU: 3)
+    {
+      "query": "Recent breakthroughs in CRISPR gene editing 2024",
+      "compute_units": 3
+    }
+
+    // Systematic review (CU: 8)
+    {
+      "query": "Meta-analysis of quantum computing applications in drug discovery with commercial viability assessment",
+      "compute_units": 8
+    }
+    ```
+  </Tab>
+
+  <Tab title="Market Intelligence">
+    ```json
+    // Trend identification (CU: 2)
+    {
+      "query": "Current trends in enterprise AI adoption",
+      "compute_units": 2
+    }
+
+    // Comprehensive analysis (CU: 7)
+    {
+      "query": "Global semiconductor supply chain vulnerabilities and mitigation strategies post-2023",
+      "compute_units": 7
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## The reasoning cascade
+
+Understanding how Caesar utilizes compute units helps optimize your usage:
+
+### CU 1: Foundation
+- Initial query interpretation
+- Primary source retrieval
+- Basic synthesis
+- Limited validation
+
+### CU 2-3: Validation
+- Cross-source verification
+- Contradiction resolution
+- Gap identification and filling
+- Enhanced coherence
+
+### CU 4-6: Expansion
+- Peripheral context gathering
+- Expert perspective integration
+- Nuanced analysis
+- Robust fact-checking
+
+### CU 7-10: Exhaustive
+- Edge case exploration
+- Minority viewpoint inclusion
+- Deep technical validation
+- Comprehensive citation network
+
+## Optimization strategies
+
+<CardGroup cols={2}>
+  <Card title="Start conservative" icon="gauge">
+    Begin with CU 3 (default) and adjust based on response quality. Most queries achieve optimal results at this level.
+  </Card>
+
+  <Card title="Match complexity" icon="brain">
+    Align compute units with query complexity. PhD-level questions benefit from CU 5-7, while straightforward queries work well with CU 1-2.
+  </Card>
+
+  <Card title="Consider time constraints" icon="clock">
+    Each CU adds ~1 minute to processing time. Balance thoroughness with response latency needs.
+  </Card>
+
+  <Card title="Monitor diminishing returns" icon="chart-line">
+    Beyond CU 5, improvements are often marginal. Reserve higher values for genuinely complex, multi-faceted research.
+  </Card>
+</CardGroup>
+
+## Technical implementation
+
+When you specify compute units in your request:
+
+```bash
+curl -X POST https://api.caesar.com/research \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Your research question",
+    "compute_units": 5
+  }'
+```
+
+Caesar internally:
+1. Allocates reasoning cycles proportional to the CU value
+2. Expands search breadth and depth parameters
+3. Enables additional validation passes
+4. Increases synthesis complexity thresholds
+
+<Warning>
+  **Budget consideration**: Your monthly allowance is measured in compute units. Higher CU values consume your budget faster but don't always yield proportionally better results. Use judiciously.
+</Warning>
+
+## Performance characteristics
+
+| Compute Units | Processing Time | Best For | Typical Use Cases |
+|--------------|-----------------|----------|-------------------|
+| **1** | ~1 minute | Quick lookups | Definitions, recent news, simple facts |
+| **2-3** | ~2-3 minutes | Standard research | Most research queries, comparisons, summaries |
+| **4-5** | ~4-5 minutes | Detailed analysis | Literature reviews, market analysis, technical deep-dives |
+| **6-7** | ~6-7 minutes | Complex synthesis | Multi-domain research, controversial topics, frontier questions |
+| **8-10** | ~8-10 minutes | Exhaustive research | PhD-level problems, systematic reviews, comprehensive reports |
+
+## Key takeaways
+
+1. **CU 2-3 represents the sweet spot** for most research queries, providing substantial multi-step reasoning without excessive computation
+2. **The jump from CU 1 to CU 2 is most significant**, enabling validation and gap-filling capabilities
+3. **Higher CU values (>5) show diminishing returns** except for genuinely complex, quantitative research
+4. **Match CU to query complexity**, not query importanceeven critical queries may only need CU 2-3 if they're straightforward
+5. **Consider time-to-insight tradeoffs**sometimes multiple focused CU 3 queries beat a single CU 10 query

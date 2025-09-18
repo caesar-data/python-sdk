@@ -14,6 +14,20 @@ landing-page:
   page: Introduction
   path: pages/introduction.mdx
 
+typography:
+  # Font for headings and titles
+  headingsFont:
+    name: system-ui
+
+  # Font for body text
+  bodyFont:
+    name: system-ui
+
+  # Font for code snippets
+  codeFont:
+    name: system-ui
+
+
 navigation:
   - section: Home
     contents:
@@ -21,8 +35,16 @@ navigation:
         path: pages/introduction.mdx
       - page: Authentication
         path: pages/authentication.mdx
+      - page: Compute Units (CU)
+        path: pages/cu.mdx
+      - page: Prompt Guidance
+        path: pages/prompts.mdx
+      - page: Errors
+        path: pages/errors.mdx
       - page: Rate Limits
         path: pages/rate-limits.mdx
+      - page: Pagination
+        path: pages/pagination.mdx
   - api: API Reference
     flattened: true
     layout:
