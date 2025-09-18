@@ -2,14 +2,114 @@
 
 ![Alt text](/assets/header.png "Caesar")
 
-Caesar’s Research API is a citation-first, AI-enabled research service. It searches the internet and proprietary data sources, gathers evidence, and synthesises answers with complete citations. It lets developers build sophisticated AI applications without maintaining their own search, indexing, or research infrastructure.
+Caesar is a **citation-first research intelligence API** that transforms how applications access and synthesize information. Unlike traditional search APIs that return raw results, Caesar performs comprehensive research—gathering evidence, validating sources, and delivering synthesized insights with complete citations.
 
-## Fundamentals
+## Why Caesar?
 
-- Async first: Research jobs run asynchronously, so you can build responsive applications without waiting for results. You can track the status of your research jobs by calling the `GET /research/{id}` endpoint.
-- Authentication: Access is managed via API keys, you can generate as many API keys as you need and limits are shared across all API keys.
-- Beta period: The API is currently in beta, so there may be changes to the API endpoints and responses.
+<CardGroup cols={2}>
+  <Card title="Beyond search" icon="magnifying-glass-plus">
+    Caesar doesn't just find information—it researches, validates, and synthesizes it into coherent, citation-backed insights.
+  </Card>
 
-## Testing
+  <Card title="Horizontal intelligence" icon="globe">
+    Works across all domains without specialized configuration. From financial analysis to scientific research, Caesar adapts to your query context.
+  </Card>
 
-You can use the API playground to test the API endpoints directly from the API reference.
+  <Card title="Production ready" icon="server">
+    Async-first architecture with robust error handling, rate limiting, and monitoring. Build responsive applications without blocking on research tasks.
+  </Card>
+
+  <Card title="Transparent sourcing" icon="quote">
+    Every claim is backed by citations. Caesar provides source URLs, relevance scores, and content snippets for complete transparency.
+  </Card>
+</CardGroup>
+
+## Core capabilities
+
+- **Multi-source research**: Searches across the internet and proprietary databases
+- **Intelligent synthesis**: Combines findings into coherent, contextual responses
+- **Citation tracking**: Links every insight to its source with relevance scoring
+- **Iterative refinement**: Uses compute units to validate and expand findings
+- **Format transformation**: Applies system prompts to tailor output structure
+
+
+## Getting started
+
+Caesar operates on an **asynchronous job model**:
+
+1. **Submit a research query** → Receive a job ID
+2. **Poll for status** → Check job progress
+3. **Retrieve results** → Get synthesized research with citations
+
+```bash
+# Submit research request
+curl -X POST https://api.caesar.com/research \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Your research question here"}'
+
+# Check status
+curl -X GET https://api.caesar.com/research/{job_id} \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## Key concepts
+
+<AccordionGroup>
+  <Accordion title="Compute Units">
+    Control research depth with compute units (1-10). Each unit represents ~1 minute of processing and enables additional reasoning loops. Most queries work well with the default of 3 CU.
+
+    [Learn more →](/compute-units)
+  </Accordion>
+
+  <Accordion title="System Prompts">
+    Transform output format without affecting research logic. System prompts apply post-processing to synthesized content, enabling custom formatting for different use cases.
+
+    [Learn more →](/prompts)
+  </Accordion>
+
+  <Accordion title="Pagination">
+    Navigate large result sets efficiently with page-based pagination. All list endpoints support consistent pagination parameters for predictable data retrieval.
+
+    [Learn more →](/pagination)
+  </Accordion>
+
+  <Accordion title="Rate Limits">
+    During beta: 5 concurrent jobs, 200 monthly compute units. Limits apply to job creation only—reading results is unlimited.
+
+    [Learn more →](/rate-limits)
+  </Accordion>
+</AccordionGroup>
+
+
+## Beta considerations
+
+<Warning>
+  Caesar API is currently in beta. While the core functionality is stable, expect:
+  - Occasional API changes (with migration notices)
+  - Rate limit adjustments based on usage patterns
+  - New features and endpoints being added
+  - Performance improvements and optimizations
+</Warning>
+
+## Support
+
+- **Documentation**: Explore the sidebar for detailed guides
+- **API Playground**: Test endpoints in the [API Reference](/api-reference)
+- **Contact**: [support@caesar.com](mailto:support@caesar.com)
+
+## Learn more
+
+<CardGroup cols={3}>
+  <Card title="API Reference" icon="code" href="/api-reference">
+    Explore all available endpoints
+  </Card>
+
+  <Card title="Compute Units" icon="gauge" href="/compute-units">
+    Control research depth
+  </Card>
+
+  <Card title="Rate Limits" icon="shield" href="/rate-limits">
+    Understand usage limits
+  </Card>
+</CardGroup>
