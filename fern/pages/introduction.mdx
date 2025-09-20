@@ -43,13 +43,13 @@ Caesar operates on an **asynchronous job model**:
 
 ```bash
 # Submit research request
-curl -X POST https://api.caesar.com/research \
+curl -X POST https://api.caesar.xyz/research \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"query": "Your research question here"}'
 
 # Check status
-curl -X GET https://api.caesar.com/research/{job_id} \
+curl -X GET https://api.caesar.xyz/research/{job_id} \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -59,25 +59,25 @@ curl -X GET https://api.caesar.com/research/{job_id} \
   <Accordion title="Compute Units">
     Control research depth with compute units (1-10). Each unit represents ~1 minute of processing and enables additional reasoning loops. Default is 1 CU.
 
-    [Learn more →](/home/compute-units-cu)
+    [Learn more →](/get-started/compute-units-cu)
   </Accordion>
 
   <Accordion title="System Prompts">
     Transform output format without affecting research logic. System prompts apply post-processing to synthesized content, enabling custom formatting for different use cases.
 
-    [Learn more →](/home/prompt-guidance)
+    [Learn more →](/get-started/prompt-guidance)
   </Accordion>
 
   <Accordion title="Pagination">
     Navigate large result sets efficiently with page-based pagination. All list endpoints support consistent pagination parameters for predictable data retrieval.
 
-    [Learn more →](/home/pagination)
+    [Learn more →](/get-started/pagination)
   </Accordion>
 
   <Accordion title="Rate Limits">
     During beta: 5 concurrent jobs, 200 monthly compute units. Limits apply to job creation only—reading results is unlimited.
 
-    [Learn more →](/home/rate-limits)
+    [Learn more →](/get-started/rate-limits)
   </Accordion>
 </AccordionGroup>
 
@@ -99,7 +99,7 @@ to use the API without owning tokens please contact us at [support@caesar.xyz](m
 
 - **Documentation**: Explore the sidebar for detailed guides
 - **API Playground**: Test endpoints in the [API Reference](/api-reference)
-- **Contact**: [support@caesar.com](mailto:support@caesar.com)
+- **Contact**: [support@caesar.xyz](mailto:support@caesar.xyz)
 
 ## Learn more
 

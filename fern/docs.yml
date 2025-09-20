@@ -29,7 +29,7 @@ typography:
 
 
 navigation:
-  - section: Home
+  - section: Get Started
     contents:
       - page: Introduction
         path: pages/introduction.mdx
