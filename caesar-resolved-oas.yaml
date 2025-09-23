@@ -945,12 +945,12 @@ paths:
                     type: string
                     description: "Raw extracted content for this result (may include HTML, markdown, or plain text)."
                 examples:
-                - content: "map[Content:Skip to main content… Current]"
+                - content: "Skip to main content… Current]"
               examples:
                 example:
                   value:
                     content: |
-                      map[Content:Skip to main contentEnable accessibility for low visionOpen the accessibility menu
+                      Skip to main contentEnable accessibility for low visionOpen the accessibility menu
 
                       ![Spinner: White decorative](https://cdn.userway.org/widgetapp/images/spin_wh.svg)
 
@@ -1416,7 +1416,7 @@ components:
           type: string
           description: "Raw extracted content for this result (may include HTML, markdown, or plain text)."
       examples:
-      - content: "map[Content:Skip to main content… Current]"
+      - content: "Skip to main content… Current]"
     PageMeta:
       type: object
       additionalProperties: false
