@@ -280,10 +280,15 @@ paths:
                             type: object
                             additionalProperties: false
                             required:
+                            - id
                             - score
                             - title
                             - url
                             properties:
+                              id:
+                                type: string
+                                format: uuid
+                                description: Result object identifier.
                               score:
                                 type: number
                                 format: float
@@ -300,7 +305,8 @@ paths:
                                 minimum: 0
                                 description: Index used for inline citations (if present).
                             examples:
-                            - score: 0.92
+                            - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
+                              score: 0.92
                               title: IEA Global EV Outlook 2025
                               url: https://www.iea.org/reports/global-ev-outlook-2025
                               citation_index: 1
@@ -382,25 +388,6 @@ paths:
                       limit: 10
                       page: 1
                       has_next: true
-        "400":
-          description: Bad request — invalid input parameters.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - error
-                properties:
-                  error:
-                    type: string
-                    description: Human-readable error description.
-                    examples:
-                    - Body contains incorrect JSON type for field "compute_units"
-              examples:
-                invalidType:
-                  value:
-                    error: Body contains incorrect JSON type for field "compute_units"
         "401":
           description: Unauthorized — invalid or missing API key.
           content:
@@ -420,25 +407,6 @@ paths:
                 missingKey:
                   value:
                     error: Missing API key
-        "429":
-          description: Too many requests — rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - error
-                properties:
-                  error:
-                    type: string
-                    description: Human-readable error description.
-                    examples:
-                    - Body contains incorrect JSON type for field "compute_units"
-              examples:
-                ratelimited:
-                  value:
-                    error: Rate limit exceeded. Try again later.
         "500":
           description: Internal server error.
           content:
@@ -525,10 +493,15 @@ paths:
                       type: object
                       additionalProperties: false
                       required:
+                      - id
                       - score
                       - title
                       - url
                       properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: Result object identifier.
                         score:
                           type: number
                           format: float
@@ -545,7 +518,8 @@ paths:
                           minimum: 0
                           description: Index used for inline citations (if present).
                       examples:
-                      - score: 0.92
+                      - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
+                        score: 0.92
                         title: IEA Global EV Outlook 2025
                         url: https://www.iea.org/reports/global-ev-outlook-2025
                         citation_index: 1
@@ -571,33 +545,16 @@ paths:
                     content: null
                     transformed_content: null
                     results:
-                    - score: 0.88
+                    - id: 22b28323-3f18-4dc2-8115-e50e503f7dee
+                      score: 0.88
                       title: Benchmarking lithium supply constraints
                       url: https://example.org/paper
                       citation_index: 1
-                    - score: 0.81
+                    - id: fd47d46b-4779-4ace-b01d-c7863703f194
+                      score: 0.81
                       title: USGS Mineral Commodity Summaries 2025
                       url: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025.pdf
                       citation_index: 2
-        "400":
-          description: Bad request — invalid input parameters.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - error
-                properties:
-                  error:
-                    type: string
-                    description: Human-readable error description.
-                    examples:
-                    - Body contains incorrect JSON type for field "compute_units"
-              examples:
-                invalidType:
-                  value:
-                    error: Body contains incorrect JSON type for field "compute_units"
         "401":
           description: Unauthorized — invalid or missing API key.
           content:
@@ -636,25 +593,6 @@ paths:
                 notFound:
                   value:
                     error: Resource not found
-        "429":
-          description: Too many requests — rate limit exceeded.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - error
-                properties:
-                  error:
-                    type: string
-                    description: Human-readable error description.
-                    examples:
-                    - Body contains incorrect JSON type for field "compute_units"
-              examples:
-                ratelimited:
-                  value:
-                    error: Rate limit exceeded. Try again later.
         "500":
           description: Internal server error.
           content:
@@ -931,25 +869,6 @@ paths:
                       limit: 10
                       page: 1
                       has_next: true
-        "400":
-          description: Bad request — invalid input parameters.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: false
-                required:
-                - error
-                properties:
-                  error:
-                    type: string
-                    description: Human-readable error description.
-                    examples:
-                    - Body contains incorrect JSON type for field "compute_units"
-              examples:
-                invalidType:
-                  value:
-                    error: Body contains incorrect JSON type for field "compute_units"
         "401":
           description: Unauthorized — invalid or missing API key.
           content:
@@ -969,8 +888,8 @@ paths:
                 missingKey:
                   value:
                     error: Missing API key
-        "429":
-          description: Too many requests — rate limit exceeded.
+        "500":
+          description: Internal server error.
           content:
             application/json:
               schema:
@@ -985,9 +904,96 @@ paths:
                     examples:
                     - Body contains incorrect JSON type for field "compute_units"
               examples:
-                ratelimited:
+                generic:
                   value:
-                    error: Rate limit exceeded. Try again later.
+                    error: An unexpected error occurred
+  /research/{id}/results/{resultId}/content:
+    get:
+      tags:
+      - Research
+      summary: Get Research Result Content
+      description: |
+        Returns the raw content for a specific result within a research object.
+      operationId: getResearchResultContent
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Research job identifier.
+      - name: resultId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Result item identifier.
+      responses:
+        "200":
+          description: Content retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - content
+                properties:
+                  content:
+                    type: string
+                    description: "Raw extracted content for this result (may include HTML, markdown, or plain text)."
+                examples:
+                - content: "map[Content:Skip to main content… Current]"
+              examples:
+                example:
+                  value:
+                    content: |
+                      map[Content:Skip to main contentEnable accessibility for low visionOpen the accessibility menu
+
+                      ![Spinner: White decorative](https://cdn.userway.org/widgetapp/images/spin_wh.svg)
+
+                      ... (truncated) ...
+                      Current]
+        "401":
+          description: Unauthorized — invalid or missing API key.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - error
+                properties:
+                  error:
+                    type: string
+                    description: Human-readable error description.
+                    examples:
+                    - Body contains incorrect JSON type for field "compute_units"
+              examples:
+                missingKey:
+                  value:
+                    error: Missing API key
+        "404":
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                - error
+                properties:
+                  error:
+                    type: string
+                    description: Human-readable error description.
+                    examples:
+                    - Body contains incorrect JSON type for field "compute_units"
+              examples:
+                notFound:
+                  value:
+                    error: Resource not found
         "500":
           description: Internal server error.
           content:
@@ -1116,10 +1122,15 @@ components:
       type: object
       additionalProperties: false
       required:
+      - id
       - score
       - title
       - url
       properties:
+        id:
+          type: string
+          format: uuid
+          description: Result object identifier.
         score:
           type: number
           format: float
@@ -1136,7 +1147,8 @@ components:
           minimum: 0
           description: Index used for inline citations (if present).
       examples:
-      - score: 0.92
+      - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
+        score: 0.92
         title: IEA Global EV Outlook 2025
         url: https://www.iea.org/reports/global-ev-outlook-2025
         citation_index: 1
@@ -1189,10 +1201,15 @@ components:
             type: object
             additionalProperties: false
             required:
+            - id
             - score
             - title
             - url
             properties:
+              id:
+                type: string
+                format: uuid
+                description: Result object identifier.
               score:
                 type: number
                 format: float
@@ -1209,7 +1226,8 @@ components:
                 minimum: 0
                 description: Index used for inline citations (if present).
             examples:
-            - score: 0.92
+            - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
+              score: 0.92
               title: IEA Global EV Outlook 2025
               url: https://www.iea.org/reports/global-ev-outlook-2025
               citation_index: 1
@@ -1284,10 +1302,15 @@ components:
                   type: object
                   additionalProperties: false
                   required:
+                  - id
                   - score
                   - title
                   - url
                   properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: Result object identifier.
                     score:
                       type: number
                       format: float
@@ -1304,7 +1327,8 @@ components:
                       minimum: 0
                       description: Index used for inline citations (if present).
                   examples:
-                  - score: 0.92
+                  - id: f2f6e5db-2c7d-4f56-bb0c-5a6b6a7a9b10
+                    score: 0.92
                     title: IEA Global EV Outlook 2025
                     url: https://www.iea.org/reports/global-ev-outlook-2025
                     citation_index: 1
@@ -1382,6 +1406,17 @@ components:
       - id: 9c6f8b1a-2a4f-4a35-86b9-0d0b5e25d5e5
         file_name: document.pdf
         content_type: application/pdf
+    ResearchResultContentResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - content
+      properties:
+        content:
+          type: string
+          description: "Raw extracted content for this result (may include HTML, markdown, or plain text)."
+      examples:
+      - content: "map[Content:Skip to main content… Current]"
     PageMeta:
       type: object
       additionalProperties: false

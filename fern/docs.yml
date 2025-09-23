@@ -53,6 +53,8 @@ navigation:
           title: Create research
         - endpoint: GET /research/{id}
           title: Retrieve a research object
+        - endpoint: GET /research/{id}/results/{resultId}/content
+          title: Retrieve raw result content
         - endpoint: GET /research
           title: List research
         - endpoint: POST /research/files
