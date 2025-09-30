@@ -14,6 +14,7 @@ from caesar.types import (
     ResearchCreateResponse,
     ResearchRetrieveResponse,
 )
+from caesar.pagination import SyncPagination, AsyncPagination
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -112,7 +113,7 @@ class TestResearch:
     @parametrize
     def test_method_list(self, client: Caesar) -> None:
         research = client.research.list()
-        assert_matches_type(ResearchListResponse, research, path=["response"])
+        assert_matches_type(SyncPagination[ResearchListResponse], research, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -121,7 +122,7 @@ class TestResearch:
             limit=1,
             page=1,
         )
-        assert_matches_type(ResearchListResponse, research, path=["response"])
+        assert_matches_type(SyncPagination[ResearchListResponse], research, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -131,7 +132,7 @@ class TestResearch:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         research = response.parse()
-        assert_matches_type(ResearchListResponse, research, path=["response"])
+        assert_matches_type(SyncPagination[ResearchListResponse], research, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -141,7 +142,7 @@ class TestResearch:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             research = response.parse()
-            assert_matches_type(ResearchListResponse, research, path=["response"])
+            assert_matches_type(SyncPagination[ResearchListResponse], research, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -242,7 +243,7 @@ class TestAsyncResearch:
     @parametrize
     async def test_method_list(self, async_client: AsyncCaesar) -> None:
         research = await async_client.research.list()
-        assert_matches_type(ResearchListResponse, research, path=["response"])
+        assert_matches_type(AsyncPagination[ResearchListResponse], research, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -251,7 +252,7 @@ class TestAsyncResearch:
             limit=1,
             page=1,
         )
-        assert_matches_type(ResearchListResponse, research, path=["response"])
+        assert_matches_type(AsyncPagination[ResearchListResponse], research, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -261,7 +262,7 @@ class TestAsyncResearch:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         research = await response.parse()
-        assert_matches_type(ResearchListResponse, research, path=["response"])
+        assert_matches_type(AsyncPagination[ResearchListResponse], research, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -271,6 +272,6 @@ class TestAsyncResearch:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             research = await response.parse()
-            assert_matches_type(ResearchListResponse, research, path=["response"])
+            assert_matches_type(AsyncPagination[ResearchListResponse], research, path=["response"])
 
         assert cast(Any, response.is_closed) is True

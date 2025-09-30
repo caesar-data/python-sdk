@@ -35,8 +35,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/caesar-data/caesar-developer-experience"
-Repository = "https://github.com/caesar-data/caesar-developer-experience"
+Homepage = "https://github.com/stainless-sdks/caesar-python"
+Repository = "https://github.com/stainless-sdks/caesar-python"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
@@ -124,7 +124,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/caesar-data/caesar-developer-experience/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/stainless-sdks/caesar-python/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
