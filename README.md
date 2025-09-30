@@ -16,8 +16,8 @@ The REST API documentation can be found on [docs.caesar.xyz](https://docs.caesar
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/caesar-data/caesar-developer-experience.git
+# install from this staging repo
+pip install git+ssh://git@github.com/stainless-sdks/caesar-python.git
 ```
 
 > [!NOTE]
@@ -79,8 +79,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'caesar[aiohttp] @ git+ssh://git@github.com/caesar-data/caesar-developer-experience.git'
+# install from this staging repo
+pip install 'caesar[aiohttp] @ git+ssh://git@github.com/stainless-sdks/caesar-python.git'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
@@ -113,6 +113,81 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Pagination
+
+List methods in the Caesar API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from caesar import Caesar
+
+client = Caesar()
+
+all_researches = []
+# Automatically fetches more pages as needed.
+for research in client.research.list(
+    limit=30,
+    page=2,
+):
+    # Do something with research here
+    all_researches.append(research)
+print(all_researches)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from caesar import AsyncCaesar
+
+client = AsyncCaesar()
+
+
+async def main() -> None:
+    all_researches = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for research in client.research.list(
+        limit=30,
+        page=2,
+    ):
+        all_researches.append(research)
+    print(all_researches)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.research.list(
+    limit=30,
+    page=2,
+)
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.data)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.research.list(
+    limit=30,
+    page=2,
+)
+
+print(f"page number: {first_page.pagination.page}")  # => "page number: 1"
+for research in first_page.data:
+    print(research.id)
+
+# Remove `await` for non-async usage.
+```
 
 ## File uploads
 
@@ -269,9 +344,9 @@ research = response.parse()  # get the object that `research.create()` would hav
 print(research.id)
 ```
 
-These methods return an [`APIResponse`](https://github.com/caesar-data/caesar-developer-experience/tree/main/src/caesar/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/caesar-python/tree/main/src/caesar/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/caesar-data/caesar-developer-experience/tree/main/src/caesar/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/caesar-python/tree/main/src/caesar/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -377,7 +452,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/caesar-data/caesar-developer-experience/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/caesar-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 

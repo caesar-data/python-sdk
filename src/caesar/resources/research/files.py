@@ -16,7 +16,8 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncPagination, AsyncPagination
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.research import file_list_params, file_create_params
 from ...types.research.file_list_response import FileListResponse
 from ...types.research.file_create_response import FileCreateResponse
@@ -31,7 +32,7 @@ class FilesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#accessing-raw-response-data-eg-headers
         """
         return FilesResourceWithRawResponse(self)
 
@@ -40,7 +41,7 @@ class FilesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#with_streaming_response
         """
         return FilesResourceWithStreamingResponse(self)
 
@@ -94,7 +95,7 @@ class FilesResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> SyncPagination[FileListResponse]:
         """
         Returns a paginated list of Research File objects.
 
@@ -111,8 +112,9 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/research/files",
+            page=SyncPagination[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -126,7 +128,7 @@ class FilesResource(SyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=FileListResponse,
         )
 
 
@@ -137,7 +139,7 @@ class AsyncFilesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#accessing-raw-response-data-eg-headers
         """
         return AsyncFilesResourceWithRawResponse(self)
 
@@ -146,7 +148,7 @@ class AsyncFilesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#with_streaming_response
         """
         return AsyncFilesResourceWithStreamingResponse(self)
 
@@ -189,7 +191,7 @@ class AsyncFilesResource(AsyncAPIResource):
             cast_to=FileCreateResponse,
         )
 
-    async def list(
+    def list(
         self,
         *,
         limit: int | Omit = omit,
@@ -200,7 +202,7 @@ class AsyncFilesResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> FileListResponse:
+    ) -> AsyncPaginator[FileListResponse, AsyncPagination[FileListResponse]]:
         """
         Returns a paginated list of Research File objects.
 
@@ -217,14 +219,15 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/research/files",
+            page=AsyncPagination[FileListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "page": page,
@@ -232,7 +235,7 @@ class AsyncFilesResource(AsyncAPIResource):
                     file_list_params.FileListParams,
                 ),
             ),
-            cast_to=FileListResponse,
+            model=FileListResponse,
         )
 
 

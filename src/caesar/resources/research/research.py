@@ -31,7 +31,8 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
+from ...pagination import SyncPagination, AsyncPagination
+from ..._base_client import AsyncPaginator, make_request_options
 from ...types.research_list_response import ResearchListResponse
 from ...types.research_create_response import ResearchCreateResponse
 from ...types.research_retrieve_response import ResearchRetrieveResponse
@@ -54,7 +55,7 @@ class ResearchResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#accessing-raw-response-data-eg-headers
         """
         return ResearchResourceWithRawResponse(self)
 
@@ -63,7 +64,7 @@ class ResearchResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#with_streaming_response
         """
         return ResearchResourceWithStreamingResponse(self)
 
@@ -162,7 +163,7 @@ class ResearchResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ResearchListResponse:
+    ) -> SyncPagination[ResearchListResponse]:
         """
         Returns a paginated list of research objects.
 
@@ -179,8 +180,9 @@ class ResearchResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/research",
+            page=SyncPagination[ResearchListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -194,7 +196,7 @@ class ResearchResource(SyncAPIResource):
                     research_list_params.ResearchListParams,
                 ),
             ),
-            cast_to=ResearchListResponse,
+            model=ResearchListResponse,
         )
 
 
@@ -213,7 +215,7 @@ class AsyncResearchResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#accessing-raw-response-data-eg-headers
         """
         return AsyncResearchResourceWithRawResponse(self)
 
@@ -222,7 +224,7 @@ class AsyncResearchResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/caesar-data/caesar-developer-experience#with_streaming_response
+        For more information, see https://www.github.com/stainless-sdks/caesar-python#with_streaming_response
         """
         return AsyncResearchResourceWithStreamingResponse(self)
 
@@ -310,7 +312,7 @@ class AsyncResearchResource(AsyncAPIResource):
             cast_to=ResearchRetrieveResponse,
         )
 
-    async def list(
+    def list(
         self,
         *,
         limit: int | Omit = omit,
@@ -321,7 +323,7 @@ class AsyncResearchResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> ResearchListResponse:
+    ) -> AsyncPaginator[ResearchListResponse, AsyncPagination[ResearchListResponse]]:
         """
         Returns a paginated list of research objects.
 
@@ -338,14 +340,15 @@ class AsyncResearchResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/research",
+            page=AsyncPagination[ResearchListResponse],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
                         "limit": limit,
                         "page": page,
@@ -353,7 +356,7 @@ class AsyncResearchResource(AsyncAPIResource):
                     research_list_params.ResearchListParams,
                 ),
             ),
-            cast_to=ResearchListResponse,
+            model=ResearchListResponse,
         )
 
 

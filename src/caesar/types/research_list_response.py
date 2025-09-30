@@ -6,10 +6,10 @@ from typing_extensions import Literal
 
 from .._models import BaseModel
 
-__all__ = ["ResearchListResponse", "Data", "DataResult", "Pagination"]
+__all__ = ["ResearchListResponse", "Result"]
 
 
-class DataResult(BaseModel):
+class Result(BaseModel):
     id: str
     """Result object identifier."""
 
@@ -26,7 +26,7 @@ class DataResult(BaseModel):
     """Index used for inline citations (if present)."""
 
 
-class Data(BaseModel):
+class ResearchListResponse(BaseModel):
     id: str
     """Research job identifier."""
 
@@ -36,7 +36,7 @@ class Data(BaseModel):
     query: str
     """Original query."""
 
-    results: List[DataResult]
+    results: List[Result]
     """Ranked retrieval results and citations."""
 
     status: Literal["queued", "searching", "summarizing", "analyzing", "completed", "failed", "researching"]
@@ -47,24 +47,3 @@ class Data(BaseModel):
 
     transformed_content: Optional[str] = None
     """Post-processed content (e.g., formatted/converted)."""
-
-
-class Pagination(BaseModel):
-    has_next: bool
-    """Whether another page is available."""
-
-    limit: int
-    """Page size (items per page)."""
-
-    page: int
-    """Current page number (1-based)."""
-
-    total: Optional[int] = None
-    """Total number of items (may be omitted)."""
-
-
-class ResearchListResponse(BaseModel):
-    data: List[Data]
-    """List of research objects."""
-
-    pagination: Pagination
