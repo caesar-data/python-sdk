@@ -1,11 +1,11 @@
 [project]
-name = "caesar"
-version = "0.0.1"
+name = "caesar-data"
+version = "1.0.0"
 description = "The official Python library for the caesar API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Caesar", email = "" },
+{ name = "Caesar", email = "dev@caesar.xyz" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
@@ -35,8 +35,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/stainless-sdks/caesar-python"
-Repository = "https://github.com/stainless-sdks/caesar-python"
+Homepage = "https://github.com/caesar-data/python-sdk"
+Repository = "https://github.com/caesar-data/python-sdk"
 
 [project.optional-dependencies]
 aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
@@ -124,7 +124,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/stainless-sdks/caesar-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/caesar-data/python-sdk/tree/main/\g<2>)'
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
