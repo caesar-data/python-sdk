@@ -5,7 +5,7 @@ description = "The official Python library for the caesar API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Caesar", email = "" },
+{ name = "Caesar", email = "dev@caesar.xyz" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
