@@ -1,7 +1,7 @@
 # Caesar Python API library
 
 <!-- prettier-ignore -->
-[![PyPI version](https://img.shields.io/pypi/v/caesar.svg?label=pypi%20(stable))](https://pypi.org/project/caesar/)
+[![PyPI version](https://img.shields.io/pypi/v/caesar-data.svg?label=pypi%20(stable))](https://pypi.org/project/caesar-data/)
 
 The Caesar Python library provides convenient access to the Caesar REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -16,12 +16,9 @@ The REST API documentation can be found on [docs.caesar.xyz](https://docs.caesar
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/caesar-data/python-sdk.git
+# install from PyPI
+pip install caesar-data
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://www.stainless.com/docs/guides/publish), this will become: `pip install caesar`
 
 ## Usage
 
@@ -79,8 +76,8 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'caesar[aiohttp] @ git+ssh://git@github.com/caesar-data/python-sdk.git'
+# install from PyPI
+pip install caesar-data[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
