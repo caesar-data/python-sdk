@@ -1,3 +1,17 @@
+# X402
+
+## Research
+
+Types:
+
+```python
+from caesar.types.x402 import ResearchCreateResponse
+```
+
+Methods:
+
+- <code title="post /x402/research">client.x402.research.<a href="./src/caesar/resources/x402/research.py">create</a>(\*\*<a href="src/caesar/types/x402/research_create_params.py">params</a>) -> <a href="./src/caesar/types/x402/research_create_response.py">ResearchCreateResponse</a></code>
+
 # Research
 
 Types:

@@ -18,16 +18,16 @@ from .research import (
 )
 
 __all__ = [
-    "X402Resource",
-    "AsyncX402Resource",
-    "X402ResourceWithRawResponse",
-    "AsyncX402ResourceWithRawResponse",
-    "X402ResourceWithStreamingResponse",
-    "AsyncX402ResourceWithStreamingResponse",
     "ResearchResource",
     "AsyncResearchResource",
     "ResearchResourceWithRawResponse",
     "AsyncResearchResourceWithRawResponse",
     "ResearchResourceWithStreamingResponse",
     "AsyncResearchResourceWithStreamingResponse",
+    "X402Resource",
+    "AsyncX402Resource",
+    "X402ResourceWithRawResponse",
+    "AsyncX402ResourceWithRawResponse",
+    "X402ResourceWithStreamingResponse",
+    "AsyncX402ResourceWithStreamingResponse",
 ]
