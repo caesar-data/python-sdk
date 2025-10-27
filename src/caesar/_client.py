@@ -28,14 +28,12 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.x402 import x402
 from .resources.research import research
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Caesar", "AsyncCaesar", "Client", "AsyncClient"]
 
 
 class Caesar(SyncAPIClient):
-    x402: x402.X402Resource
     research: research.ResearchResource
     with_raw_response: CaesarWithRawResponse
     with_streaming_response: CaesarWithStreamedResponse
@@ -94,7 +92,6 @@ class Caesar(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.x402 = x402.X402Resource(self)
         self.research = research.ResearchResource(self)
         self.with_raw_response = CaesarWithRawResponse(self)
         self.with_streaming_response = CaesarWithStreamedResponse(self)
@@ -205,7 +202,6 @@ class Caesar(SyncAPIClient):
 
 
 class AsyncCaesar(AsyncAPIClient):
-    x402: x402.AsyncX402Resource
     research: research.AsyncResearchResource
     with_raw_response: AsyncCaesarWithRawResponse
     with_streaming_response: AsyncCaesarWithStreamedResponse
@@ -264,7 +260,6 @@ class AsyncCaesar(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.x402 = x402.AsyncX402Resource(self)
         self.research = research.AsyncResearchResource(self)
         self.with_raw_response = AsyncCaesarWithRawResponse(self)
         self.with_streaming_response = AsyncCaesarWithStreamedResponse(self)
@@ -376,25 +371,21 @@ class AsyncCaesar(AsyncAPIClient):
 
 class CaesarWithRawResponse:
     def __init__(self, client: Caesar) -> None:
-        self.x402 = x402.X402ResourceWithRawResponse(client.x402)
         self.research = research.ResearchResourceWithRawResponse(client.research)
 
 
 class AsyncCaesarWithRawResponse:
     def __init__(self, client: AsyncCaesar) -> None:
-        self.x402 = x402.AsyncX402ResourceWithRawResponse(client.x402)
         self.research = research.AsyncResearchResourceWithRawResponse(client.research)
 
 
 class CaesarWithStreamedResponse:
     def __init__(self, client: Caesar) -> None:
-        self.x402 = x402.X402ResourceWithStreamingResponse(client.x402)
         self.research = research.ResearchResourceWithStreamingResponse(client.research)
 
 
 class AsyncCaesarWithStreamedResponse:
     def __init__(self, client: AsyncCaesar) -> None:
-        self.x402 = x402.AsyncX402ResourceWithStreamingResponse(client.x402)
         self.research = research.AsyncResearchResourceWithStreamingResponse(client.research)
 
 
