@@ -83,6 +83,7 @@ pip install caesar-data[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from caesar import DefaultAioHttpClient
 from caesar import AsyncCaesar
@@ -90,7 +91,7 @@ from caesar import AsyncCaesar
 
 async def main() -> None:
     async with AsyncCaesar(
-        api_key="My API Key",
+        api_key=os.environ.get("CAESAR_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         research = await client.research.create(
